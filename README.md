@@ -26,6 +26,7 @@
     "daisyui": "^4.4.19"
   }
 }
+```
 
 # 🚀 Project Setup
 
