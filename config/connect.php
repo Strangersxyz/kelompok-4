@@ -3,7 +3,7 @@
 session_start();
 
 $host = 'localhost';
-$db = 'db_speeksy';
+$db = ''; // Sesuaikan dengan database
 $user = 'root';
 $pass = ''; // Isi kalo pake pw
 
