@@ -1,5 +1,0 @@
-# Ignoring node_modules
-node_modules/
-
-#Ignoring config files on config folder
-config/
