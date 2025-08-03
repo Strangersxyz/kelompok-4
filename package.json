@@ -1,0 +1,27 @@
+{
+  "name": "kelompok-4",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">Project Kelompok-4</h1>",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/css/input.css -o ./styles/main.css --watch",
+    "build": "npx tailwindcss -i ./src/css/input.css -o ./styles/main.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Strangersxyz/kelompok-4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Strangersxyz/kelompok-4/issues"
+  },
+  "homepage": "https://github.com/Strangersxyz/kelompok-4#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "preline": "^3.2.0",
+    "tailwindcss": "^4.1.11"
+  }
+}
