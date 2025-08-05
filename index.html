@@ -5,10 +5,266 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speeksy AI</title>
     <!-- Tailwindcss + Preline UI -->
-     <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/main.css">
 </head>
-<body>
-        <!-- Code Here -->
+<body class="bg-white min-h-screen flex flex-col">
+    <!-- Navbar -->
+  <nav class="flex items-center justify-between px-8 py-4 border-b border-gray-200">
+    <span class="font-semibold text-lg">SpeeksyAI</span>
+    <div class="flex-1 flex justify-center">
+        <div class="relative w-full max-w-xl">
+            <input type="text" placeholder="you can search character" class="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 pr-10" />
+            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <!-- Search Icon -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <button id="toggle-theme" class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 bg-gray-100 hover:bg-gray-200 transition">
+            <!-- Sun/Moon Icon -->
+            <svg id="theme-icon" class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                <path id="sun-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+        </button>
+        <img src="./assets/images/profil.png" alt="Profile 1" class="w-8 h-8 rounded-full object-cover border border-gray-300" />
+    </div>
+</nav>
+<script>
+    const btn = document.getElementById('toggle-theme');
+    const icon = document.getElementById('theme-icon');
+    btn.addEventListener('click', () => {
+        // Toggle body background only
+        document.body.classList.toggle('bg-white');
+        document.body.classList.toggle('bg-gray-900');
+        document.body.classList.toggle('text-gray-900');
+        document.body.classList.toggle('text-white');
 
+        // Navbar & Footer border color
+        document.querySelectorAll('nav, footer').forEach(el => {
+            el.classList.toggle('border-gray-200');
+            el.classList.toggle('border-gray-800');
+        });
+
+        // Footer background
+        document.querySelector('footer').classList.toggle('bg-white');
+        document.querySelector('footer').classList.toggle('bg-gray-900');
+        document.querySelector('footer').classList.toggle('text-gray-500');
+        document.querySelector('footer').classList.toggle('text-gray-300');
+
+        // Banner brightness
+        const banner = document.querySelector('.rounded-xl img');
+        if (banner) {
+            banner.classList.toggle('brightness-90');
+        }
+
+        // My Chat button background toggle
+        const myChatBtn = document.querySelector('button.font-medium.shadow');
+        if (myChatBtn) {
+            myChatBtn.classList.remove('bg-black', 'text-white');
+            myChatBtn.classList.add('bg-white', 'text-black');
+        }
+
+        // Pastikan text di dalam card tetap hitam
+        document.querySelectorAll('.bg-gray-100 .font-semibold, .bg-gray-100 .text-xs, .bg-white.shadow .font-medium, .bg-white.shadow .text-sm').forEach(el => {
+            el.classList.remove('text-white', 'text-gray-300', 'text-gray-400', 'text-gray-500', 'text-gray-900');
+            el.classList.add('text-black');
+        });
+
+        // Input search tetap putih dan text tetap hitam
+        const searchInput = document.querySelector('input[type="text"][placeholder="you can search character"]');
+        if (searchInput) {
+            searchInput.classList.remove('bg-gray-900', 'text-white');
+            searchInput.classList.add('bg-white', 'text-black');
+        }
+
+        // Profil tetap putih (tidak berubah warna di mode malam)
+const profileImg = document.querySelector('img[alt="Profile 1"]');
+if (profileImg) {
+    profileImg.classList.remove('bg-gray-900');
+    profileImg.classList.add('bg-white');
+}
+        // Profil tetap seperti semula (tidak diubah)
+        // Tidak ada kode tambahan di sini, gambar profil tidak ikut berubah warna.
+
+        // Change icon (sun/moon)
+        if (document.body.classList.contains('bg-gray-900')) {
+            icon.innerHTML = `<path stroke="currentColor" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>`;
+        } else {
+            icon.innerHTML = `
+                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                <path id="sun-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            `;
+        }
+    });
+</script>
+
+    <!-- Main Content -->
+    <main class="flex-1 px-8 py-6">
+        <!-- Banner -->
+        <div class="rounded-xl overflow-hidden mb-8">
+            <img src="./assets/images/benner.jpeg" alt="Character AI Download" class="w-full h-40 object-cover" />
+        </div>
+        <button class="mb-4 px-4 py-2 bg-white border border-gray-300 rounded-full font-medium shadow">My Chat</button>
+        <!-- Popular -->
+        <section class="mb-8">
+            <h2 class="font-semibold text-lg mb-2">Popular</h2>
+            <div class="grid grid-cols-4 gap-4">
+                <!-- Card -->
+                <!-- Contoh card dengan animasi -->
+<!-- Contoh card dengan animasi hover yang lebih smooth -->
+<!-- Card dengan shadow dan animasi hover yang lebih smooth -->
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <!-- Repeat card for more popular characters -->
+                <!-- Contoh card dengan animasi -->
+<!-- Contoh card dengan animasi hover yang lebih smooth -->
+<!-- Card dengan shadow dan animasi hover yang lebih smooth -->
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <!-- Contoh card dengan animasi -->
+<!-- Contoh card dengan animasi hover yang lebih smooth -->
+<!-- Card dengan shadow dan animasi hover yang lebih smooth -->
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <!-- Contoh card dengan animasi -->
+<!-- Contoh card dengan animasi hover yang lebih smooth -->
+<!-- Card dengan shadow dan animasi hover yang lebih smooth -->
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+            </div>
+        </section>
+        <!-- Screen -->
+        <section class="mb-8">
+            <h2 class="font-semibold text-lg mb-2">Screen</h2>
+            <div class="grid grid-cols-5 gap-4">
+                <!-- Card -->
+                <div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white cursor-pointer">
+    <img src="./assets/images/inpian.jpg" class="w-40 h-40 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <!-- Repeat for more screens -->
+                <div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white cursor-pointer">
+    <img src="./assets/images/inpian.jpg" class="w-40 h-40 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white cursor-pointer">
+    <img src="./assets/images/inpian.jpg" class="w-40 h-40 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white cursor-pointer">
+    <img src="./assets/images/inpian.jpg" class="w-40 h-40 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                <div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white cursor-pointer">
+    <img src="./assets/images/inpian.jpg" class="w-40 h-40 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+            </div>
+        </section>
+        <!-- Featured -->
+        <section class="mb-8">
+            <h2 class="font-semibold text-lg mb-2">Featured</h2>
+            <div class="grid grid-cols-4 gap-4">
+            
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+               
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+                
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+               
+<div class="bg-gray-100 rounded-xl p-3 flex flex-col items-center shadow-md transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
+    <img src="./assets/images/inpian.jpg" class="w-16 h-16 rounded-lg object-cover mb-2 shadow-lg" alt="">
+    <span class="font-semibold">Mystar</span>
+    <span class="text-xs text-gray-500">100k users</span>
+    <span class="text-xs text-gray-400">Roleplay, chat, ai</span>
+</div>
+            </div>
+        </section>
+        <!-- Try These -->
+        <section class="mb-8">
+            <h2 class="font-semibold text-lg mb-2">Try These</h2>
+            <div class="grid grid-cols-4 gap-4">
+              <div class="bg-white rounded-xl shadow flex items-center gap-3 px-4 py-2 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 cursor-pointer">
+                <img src="./assets/images/inpian.jpg" class="w-8 h-8 rounded-lg shadow-sm" alt="">
+                <span class="font-medium text-sm">Practice a new language</span>
+              </div>
+                <div class="bg-white rounded-xl shadow flex items-center gap-3 px-4 py-2 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 cursor-pointer">
+                  <img src="./assets/images/inpian.jpg" class="w-8 h-8 rounded-lg shadow-sm" alt="">
+                  <span class="font-medium text-sm">Practice a new language</span>
+              </div>
+                <div class="bg-white rounded-xl shadow flex items-center gap-3 px-4 py-2 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 cursor-pointer">
+                   <img src="./assets/images/inpian.jpg" class="w-8 h-8 rounded-lg shadow-sm" alt="">
+                   <span class="font-medium text-sm">Practice a new language</span>
+              </div>
+               <div class="bg-white rounded-xl shadow flex items-center gap-3 px-4 py-2 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:-translate-y-2 cursor-pointer">
+                    <img src="./assets/images/inpian.jpg" class="w-8 h-8 rounded-lg shadow-sm" alt="">
+                    <span class="font-medium text-sm">Practice a new language</span>
+              </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-white text-gray-500 px-8 py-6 mt-auto border-t border-gray-200">
+        <div class="flex flex-wrap justify-center items-center text-sm gap-4">
+            <a href="#" class="hover:underline">About</a>
+            <a href="#" class="hover:underline">Characters</a>
+            <a href="#" class="hover:underline">Careers</a>
+            <a href="#" class="hover:underline">Safety Center</a>
+            <a href="#" class="hover:underline">Research</a>
+        </div>
+        <div class="flex justify-center items-center text-xs gap-2 mt-2">
+            <a href="#" class="hover:underline">Cookie Policy</a>
+            <a href="#" class="hover:underline">Privacy Policy</a>
+            <a href="#" class="hover:underline">Terms of Service</a>
+        </div>
+    </footer>
 </body>
 </html>
